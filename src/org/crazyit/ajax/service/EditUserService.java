@@ -37,7 +37,8 @@ public class EditUserService {
 		//ResultSet rs= null;
 		try{
 			stmt=conn.createStatement();
-			String sql="insert into userdata(id,name,phone) values("+ _user.getId() + ",'"+ _user.getName() +"','"+ _user.getPhone() +"')";
+			String sql="insert into userdata(id,name,phone) values("+ _user.getId() + ",'"+ _user.getName() +"','"+ _user.getPhone() +"');";
+			System.out.println(sql);
 			if(stmt.executeUpdate(sql) == 1){
 				return true;
 			}else {

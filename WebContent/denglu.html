@@ -32,6 +32,17 @@
 				}
 			});
 		}
+		
+		function signup(){
+			$.ajax({
+				type:'POST',
+				url:'SignUpServlet',
+				data:$('#denglu').serialize(),
+				error:function(){
+					alert("×¢²á²»³É¹¦");
+				}
+			});
+		}
 
 //	});
 	
@@ -40,6 +51,7 @@
 		<input type="text" name="name" value="" />
 		<input type="text" name="phone" value="" />
 		<input type="button" value="button" onclick="keyButton()" />
+		<input type="button" value="sign up" onclick="signup()" />
 	</form>
 	<div id="divStr"></div>
 	

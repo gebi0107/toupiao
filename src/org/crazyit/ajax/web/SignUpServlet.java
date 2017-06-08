@@ -5,9 +5,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
-import org.crazyit.ajax.service.*;
 import org.crazyit.ajax.domain.*;
-import org.json.*;
+import org.crazyit.ajax.service.*;
 
 /**
  * Servlet implementation class SignUpServlet
@@ -34,10 +33,13 @@ public class SignUpServlet extends HttpServlet {
 		UserDataClass user = new UserDataClass();
 		user.setUser(name, phone);
 		EditUserService eus = new EditUserService();
+		eus.connMysql();
 		if(eus.insertUser(user)) {
-			
-		}else {
-			
+			response.sendRedirect("index.html");
+			System.out.println("注册成功");
+			return;
+		}else{
+			System.out.println("未成功");
 		}
 	}
 

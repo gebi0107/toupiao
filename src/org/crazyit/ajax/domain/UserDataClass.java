@@ -2,7 +2,7 @@ package org.crazyit.ajax.domain;
 
 public class UserDataClass {
 	
-	private static int id = 1000;
+	private static int id = 1002;
 	private String name;
 	private String phone;
 	
