@@ -1,0 +1,126 @@
+<html>
+	<head>
+	<script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+	</head>
+		<body>
+			
+					<script type="text/javascript" >
+						
+							var xmlrequest;
+							
+							function createXMLHttpRequest() {
+								
+									if(window.XMLHttpRequest) {
+										
+											xmlrequest = new XMLHttpRequest();
+										}
+									else if(window.ActiveXObject) {
+										
+											try{
+												
+													xmlrequest = new ActiveXObject("Msxml2.XMLHTTP");
+												}
+												catch(e) {
+													
+														try {
+															
+																xmlrequest = new ActiveXObject("Microsoft.XMLHTTP");
+															}
+															catch(e) {
+																}
+													}
+										}
+								}
+								
+							
+						
+							function printRadio() {
+								
+									createXMLHttpRequest();
+									
+									var uri = "chooseDate";
+									xmlrequest.onreadystatechange = processResponse;
+									xmlrequest.open("POST",uri,true);
+									xmlrequest.setRequestHeader("Content-Type",
+									"application/x-www-form-urlencoded");
+									var obj = document.getElementsByName("chifan");
+									for(var i=0;i<obj.length;i++) {
+										
+											if(obj[i].checked) {
+													//alert(obj[i].value);
+													xmlrequest.send("value=" + obj[i].value);
+												}
+										}
+								}
+								
+							function processResponse() {
+								
+									if(xmlrequest.readyState == 4) {
+										
+											if(xmlrequest.status == 200) {
+												
+													var jieguo = xmlrequest.responseText;
+													document.getElementById("shuzhi").innerHTML = jieguo;
+													document.getElementById("thursday").innerHTML = "";
+													document.getElementById("friday").innerHTML = "";
+												}
+										}
+								}
+							/*				
+							function reset() {
+								$.ajax({
+									type:"POST",
+									url:"resetDate",
+									data:null,
+									dataType:"json",
+									async:true,
+									success:function(data){
+										data = eval(data);
+										$("shuzhi").html("");
+										$("thursday").html("Thursday = " + data.thursday);
+										$("friday").html("Friday = " + data.friday);
+									}
+								});
+							}
+							
+							*/
+							function resetChange() {
+								
+								if(xmlrequest.readyState == 4) {
+									
+									if(xmlrequest.status == 200) {
+										
+											var objDate = eval("(" + xmlrequest.responseText + ")");
+											document.getElementById("shuzhi").innerHTML = "";
+											document.getElementById("thursday").innerHTML = "Thursday = " + objDate.thursday;
+											document.getElementById("friday").innerHTML = "Friday = " + objDate.friday;
+										}
+								}
+							}
+							
+							function reset() {
+								
+								createXMLHttpRequest();
+								var uri = "resetDate";
+								xmlrequest.onreadystatechange = resetChange;
+								xmlrequest.open("POST", uri, true);
+								xmlrequest.setRequestHeader("Content-Type", 
+										"application/x-www-form-urlencoded");
+								xmlrequest.send(null);
+							}
+							
+						</script>
+						周四：<input type="radio" checked="checked" name="chifan" value="thursday" />
+						<br />
+						周五：<input type="radio" name="chifan" value="friday" />
+						<br />
+						<input type="button" value="button" onclick="printRadio()" />
+						<br /><br />
+						<input type="button" value="reset" onclick="reset()" />
+						<div id="shuzhi"></div>
+						<div id="thursday"></div>
+						<div id="friday"></div>
+						
+					
+			</body>
+	</html>

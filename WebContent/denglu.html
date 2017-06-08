@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta charset="GBK">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+
+</head>
+<body>
+<script type="text/javascript">
+	
+//$(function() {
+		function keyButton() {
+			$.ajax({
+				type:'POST',
+				url:'signinservlet',
+				data:$('#denglu').serialize(),
+				dataType:'json',
+				cache:false,
+				success:function(data) {
+					data = eval(data);
+					
+					$("#divStr").html("Welcome " + data.name + "your phone is " + data.phone);
+					alert(data.name+""+data.phone);
+				},
+				error:function(xhr,textStatus,errorThrown ){
+			        
+			        console.log(xhr);
+			        console.log(textStatus);
+			        console.log(errorThrown);
+			        console.log(xhr.readyState);
+			        console.log(xhr.status);
+				}
+			});
+		}
+
+//	});
+	
+</script>
+	<form id="denglu">
+		<input type="text" name="name" value="" />
+		<input type="text" name="phone" value="" />
+		<input type="button" value="button" onclick="keyButton()" />
+	</form>
+	<div id="divStr"></div>
+	
+</body>
+</html>
